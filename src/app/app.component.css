@@ -1,0 +1,9 @@
+.wrapper {
+  height: auto;
+  padding: 1 rem;
+  width: 100%;
+
+  flex-grow: 1; /* If there is extra space in the container, the flex-grow property sets the size of the item to grow to fill the remaining space. */
+
+  box-sizing: border-box;
+}

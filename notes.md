@@ -673,3 +673,115 @@ Consider a car with various components such as engine, transmission, and wheels.
 ## Summary
 
 Loose coupling is a fundamental principle in software design that promotes independence, flexibility, and maintainability. By reducing dependencies between modules and promoting abstraction and clear interfaces, loose coupling helps create modular, scalable, and resilient software systems.
+
+# Providers in Angular
+
+## Definition
+
+In Angular, a provider is a configuration object used to register dependencies and create injectable instances of classes or values. Providers play a crucial role in Angular's dependency injection (DI) system, allowing components, services, directives, and other Angular constructs to request and receive dependencies.
+
+## Key Concepts
+
+1. **Registration**: Providers are used to register dependencies within Angular's dependency injection system. They define how instances of classes or values should be created and made available for injection.
+
+2. **Injection Tokens**: Dependencies are identified using injection tokens, which act as keys for looking up dependencies in the dependency injection container. Injection tokens can be classes, strings, or opaque tokens.
+
+3. **Scopes**: Providers can be registered at different levels of scope within an Angular application, including at the module level, component level, or injector level. This allows for fine-grained control over the visibility and lifetime of dependencies.
+
+## Types of Providers
+
+1. **Class Providers**: Used to provide dependencies by specifying a class or constructor function. Angular creates instances of the specified class when the dependency is requested.
+
+2. **Value Providers**: Used to provide dependencies by specifying a value directly. The same value is returned whenever the dependency is requested.
+
+3. **Factory Providers**: Used to provide dependencies by specifying a factory function that creates instances of the dependency. This allows for more complex instantiation logic.
+
+4. **Existing Providers**: Used to provide dependencies by aliasing an existing dependency to a new token. This can be useful for renaming dependencies or providing alternative implementations.
+
+## Example
+
+```typescript
+import { Injectable } from "@angular/core";
+
+@Injectable({
+  providedIn: "root",
+  useValue: "Hello, Angular!", // Value provider
+})
+export class GreetingService {}
+
+// Example of using GreetingService in a component
+@Component({
+  selector: "app-example",
+  template: `<p>{{ greeting }}</p>`,
+})
+export class ExampleComponent {
+  constructor(private greetingService: GreetingService) {}
+  get greeting() {
+    return this.greetingService;
+  }
+}
+```
+
+## Summary
+
+Providers are a fundamental concept in Angular's dependency injection system, used to register dependencies and provide instances of classes or values to components, services, and other Angular constructs. Understanding how to use providers effectively is essential for managing dependencies and building modular, maintainable Angular applications.
+
+# Route
+
+`{ path: '', redirectTo: 'home', pathMatch: 'full' }`
+
+The provided line is a route configuration for an Angular application using the Angular Router module. This configuration is used to define routes and their corresponding components or actions in an Angular application.
+
+`path: ''`: This specifies the path for the route. An empty string '' means the root URL of the application (i.e., /).
+
+`redirectTo: 'home'`: This tells the router to redirect to the home path whenever the root URL is accessed.
+
+`pathMatch: 'full'`: This ensures that the entire URL path is matched before performing the redirection. In this context, pathMatch: 'full' means that the router should only redirect if the full URL matches the empty path specified.
+
+# CSS basics
+
+## flex-grow
+
+If there is extra space in the container, the flex-grow property sets the size of the item to grow to fill the remaining space. If one item has a higher flex-grow value than the others, it gets a larger share of the extra space.
+
+Syntax: `css
+flex-grow: 1;`
+
+## box-sizing
+
+`box-sizing`: a rule that tells a browser how to calculate the total size of an element, including its padding and border.
+
+By default, when you set the width or height of an element in CSS, the browser only considers the content area when calculating its size. This means that any padding or border added to the element will increase its size beyond what you specified.
+
+With `box-sizing: border-box;`, you're telling the browser to include the padding and border in the total width and height of the element. So, if you set an element's width to 100 pixels and add 10 pixels of padding, the total width of the element will be 100 pixels, including the padding.
+
+## flex-wrap
+
+`flex-wrap`: a CSS property used in Flexbox layout to control how flex items are wrapped within a flex container. By default, flex items are laid out in a single line, but with flex-wrap, you can specify whether and how they should wrap onto multiple lines.
+
+**nowrap**: This is the default value. Flex items will be laid out in a single line, and they will not wrap onto multiple lines, even if they overflow the container.
+
+```css
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+```
+
+**wrap**: Flex items will wrap onto multiple lines, from top to bottom if the flex direction is row, or from left to right if the flex direction is column.
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+```
+
+**wrap-reverse**: Flex items will wrap onto multiple lines in reverse order. For a row direction, items will wrap from bottom to top, and for a column direction, items will wrap from right to left.
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+```
