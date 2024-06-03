@@ -738,6 +738,147 @@ The provided line is a route configuration for an Angular application using the 
 
 `pathMatch: 'full'`: This ensures that the entire URL path is matched before performing the redirection. In this context, pathMatch: 'full' means that the router should only redirect if the full URL matches the empty path specified.
 
+# Loop
+
+```html
+<app-product-card *ngFor="let product of products" [product]="product"> </app-product-card>
+```
+
+Angular template code for iterating over a list of products and creating a product card for each one. The \*ngFor directive is used to loop through the products array and bind each product item to an app-product-card component.
+
+Here is a breakdown of what this code does:
+
+`*ngFor="let product of products"`: This directive iterates over the products array. For each item in the array, it creates a local variable product which represents the current item.
+
+`[product]="product"`: This is an input binding that passes the current product item to the product input property of the app-product-card component.
+
+`<app-product-card></app-product-card>`: This is a custom Angular component that is presumably designed to display product details.
+
+# Non-null assertion
+
+Using `@Input() product!: Product;` in Angular is a way to declare that the product property is expected to be provided by the parent component and that it should be of type Product. The ! (exclamation mark) is known as the non-null assertion operator, which tells TypeScript that this property will be initialized (or assigned a value) and should not be considered null or undefined.
+
+# Input, and Output
+
+In Angular, @Input and @Output decorators are used to pass data and events between components. Here's how you can use the @Input decorator to receive data from a parent component and the @Output decorator to emit events back to the parent component.
+
+**Product Interface**: Define the Product interface.
+
+```typescript
+// product.model.ts
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+**Product Component**: This component receives a product through the @Input property and emits an event when some action occurs.
+
+```typescript
+// product.component.ts
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Product } from "./product.model"; // Adjust the path as necessary
+
+@Component({
+  selector: "app-product",
+  templateUrl: "./product.component.html",
+  styleUrls: ["./product.component.css"],
+})
+export class ProductComponent {
+  @Input() product!: Product;
+  @Output() productOut: EventEmitter<Product> = new EventEmitter<Product>();
+
+  // Method to emit product
+  emitProduct() {
+    this.productOut.emit(this.product);
+  }
+}
+```
+
+**Product Component Template:** The template to display product details and a button to emit the event.
+
+```html
+<!-- product.component.html -->
+<div class="product-card">
+  <h3>{{ product.name }}</h3>
+  <p>Price: {{ product.price }}</p>
+  <button (click)="emitProduct()">Select Product</button>
+</div>
+```
+
+**Parent Component**: The parent component that contains the list of products and handles the event emitted by the child component.
+
+```typescript
+// parent-component.component.ts
+import { Component, OnInit } from "@angular/core";
+import { Product } from "./product.model"; // Adjust the path as necessary
+
+@Component({
+  selector: "app-parent-component",
+  templateUrl: "./parent-component.component.html",
+  styleUrls: ["./parent-component.component.css"],
+})
+export class ParentComponent implements OnInit {
+  products: Product[] = [
+    { id: 1, name: "Product 1", price: 100 },
+    { id: 2, name: "Product 2", price: 200 },
+    { id: 3, name: "Product 3", price: 300 },
+    // more products
+  ];
+
+  selectedProduct: Product | null = null;
+
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  onProductSelected(product: Product): void {
+    this.selectedProduct = product;
+    console.log("Selected Product:", product);
+  }
+}
+```
+
+**Parent Component Template**: The template to iterate over the products and bind the productOut event to a method in the parent component.
+
+```html
+<!-- parent-component.component.html -->
+<div class="product-list">
+  <app-product *ngFor="let product of products" [product]="product" (productOut)="onProductSelected($event)"></app-product>
+</div>
+<div *ngIf="selectedProduct">
+  <h2>Selected Product Details</h2>
+  <p>ID: {{ selectedProduct.id }}</p>
+  <p>Name: {{ selectedProduct.name }}</p>
+  <p>Price: {{ selectedProduct.price }}</p>
+</div>
+```
+
+**Product Component Styles**: Basic styling for the product component.
+
+```css
+/_ product.component.css _/ .product-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
+```
+
+## Summary
+
+**ProductComponent**: Receives a product via @Input and emits an event via @Output when a button is clicked.
+**ParentComponent**: Contains an array of products and listens for the productOut event to handle the selected product.
+**Template Binding**: Binds the @Input and @Output properties to pass data and handle events between the components.
+
+This setup ensures seamless communication between the parent and child components, allowing the parent to react to events emitted by the child.
+
 # CSS basics
 
 ## flex-grow
