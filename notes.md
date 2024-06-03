@@ -229,3 +229,447 @@ body {
 ```
 
 In summary, while CSS is the standard styling language for web development, SCSS, SASS, and LESS are CSS preprocessors that enhance CSS with additional features, making styling more efficient and maintainable.
+
+# Angular.json
+
+The `angular.json` file is a configuration file used by the Angular CLI (Command Line Interface) to manage various settings and options for an Angular project. It is located in the root directory of an Angular project and is generated automatically when you create a new Angular project using the Angular CLI.
+
+## Importance of angular.json
+
+1. **Project Configuration**: The `angular.json` file contains project-specific configuration settings such as project name, root folder, source paths, output paths, and more. These settings define how the project is built and compiled.
+
+2. **Build Configuration**: It defines build options such as build configurations (e.g., development, production), build optimization settings, output filenames, and asset configurations. These settings determine how the application is built and packaged for deployment.
+
+3. **Asset Configuration**: The `assets` property in `angular.json` allows you to specify assets such as images, fonts, and other static files that are copied to the output directory during the build process.
+
+4. **Environment Configuration**: Angular allows you to define different environment configurations (e.g., development, production) to manage environment-specific settings such as API endpoints, environment variables, and other configuration options. The `angular.json` file provides a place to define and manage these environment configurations.
+
+5. **Build Architectures**: Angular CLI uses the `angular.json` file to define build architectures (e.g., browser, server-side rendering) and configure specific build options for each architecture.
+
+6. **Global Styles and Scripts**: It allows you to specify global stylesheets and scripts that are included in the application. These styles and scripts are applied globally across the application.
+
+7. **Custom Builder Configurations**: The `angular.json` file enables you to define custom builder configurations to extend the default Angular CLI build process with custom scripts or tools.
+
+## Example Structure of angular.json
+
+```json
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "my-project": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/my-project",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            ...
+          }
+        },
+        ...
+      }
+    }
+  },
+  ...
+}
+```
+
+In summary, the angular.json file is a crucial part of an Angular project as it contains project-specific configuration settings, build configurations, asset configurations, and other options needed for building, compiling, and deploying an Angular application.
+
+# Component in Angular
+
+A component in Angular is a fundamental building block used to create user interfaces for web applications. It encapsulates the HTML, CSS, and TypeScript code required to render a specific part of the application's UI. Components are reusable, self-contained units that can be composed together to create complex UIs.
+
+## Key Features of Components
+
+1. **Encapsulation**: Components encapsulate the presentation logic and data associated with a specific part of the UI. This encapsulation helps in maintaining modularity, reusability, and separation of concerns.
+
+2. **Reusability**: Components are designed to be reusable across different parts of the application. They can be composed together to create complex UI structures without duplicating code.
+
+3. **Composition**: Components can be composed hierarchically to create a tree-like structure of nested components. This allows for the creation of complex UI layouts and interactions.
+
+4. **Lifecycle Hooks**: Angular provides a set of lifecycle hooks that allow developers to tap into key moments in a component's lifecycle, such as initialization, change detection, and destruction. These hooks enable developers to perform tasks like fetching data, initializing state, or cleaning up resources.
+
+5. **Input and Output Properties**: Components can communicate with parent and child components using input and output properties. Input properties allow parent components to pass data to child components, while output properties enable child components to emit events to parent components.
+
+6. **Template and Styles**: Components have associated templates (HTML) and styles (CSS or SCSS) that define the visual representation and styling of the component. Angular uses a powerful templating engine with features like data binding, directives, and pipes to create dynamic and interactive UIs.
+
+7. **Dependency Injection**: Angular's dependency injection system allows components to declare their dependencies and have them injected by the framework. This promotes loose coupling and makes components more testable and maintainable.
+
+## Example of a Simple Angular Component
+
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-example",
+  templateUrl: "./example.component.html",
+  styleUrls: ["./example.component.css"],
+})
+export class ExampleComponent {
+  // Component logic and data
+  message: string = "Hello, Angular!";
+}
+```
+
+In the above example, ExampleComponent is a simple Angular component that displays a message using interpolation in its template. The @Component decorator is used to define metadata for the component, including its selector, template, and styles.
+
+In summary, components are essential building blocks in Angular applications, providing a modular, reusable, and encapsulated way to create user interfaces.
+
+## Generate a new component
+
+1. You can use the following code: `ng generate component {component_name}`
+
+# Start local development server
+
+`ng serve`
+
+# Understanding `<router-outlet>` in Angular
+
+`<router-outlet>` is a directive provided by Angular's Router module. It acts as a placeholder in the DOM where the router dynamically inserts the components based on the current route. Essentially, it is the point in your application's template where the matched component is rendered.
+
+## Key Points
+
+1. **Router Configuration**: In Angular, routes are configured in a routing module. Each route maps a URL path to a specific component. The `RouterModule` is used to define and configure these routes.
+
+2. **Dynamic Component Loading**: The `<router-outlet>` directive enables dynamic loading of components based on the URL path. When the URL changes, the router looks up the route configuration and loads the corresponding component into the `<router-outlet>`.
+
+3. **Nested Routing**: Multiple `<router-outlet>` elements can be used for nested routing scenarios. This allows for complex routing structures where child routes render components within parent routes.
+
+## Example
+
+Here's a simple example to illustrate the use of `<router-outlet>`.
+
+### Step 1: Define Routes in `app-routing.module.ts`
+
+```typescript
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { AboutComponent } from "./about/about.component";
+
+const routes: Routes = [
+  { path: "", component: HomeComponent },
+  { path: "about", component: AboutComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
+## Step 2: Use `<router-outlet>` in `app.component.html`
+
+```html
+<!-- app.component.html -->
+<nav>
+  <a routerLink="/">Home</a>
+  <a routerLink="/about">About</a>
+</nav>
+
+<router-outlet></router-outlet>
+```
+
+## Step 3: Create Components
+
+### `home.component.ts`
+
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-home",
+  template: `<h1>Home</h1>`,
+})
+export class HomeComponent {}
+```
+
+### `about.component.ts`
+
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-about",
+  template: `<h1>About</h1>`,
+})
+export class AboutComponent {}
+```
+
+## Step 4: Navigation
+
+With the above setup:
+
+- Navigating to `/` will render the `HomeComponent` within the `<router-outlet>`.
+- Navigating to `/about` will render the `AboutComponent` within the `<router-outlet>`.
+
+## Summary
+
+The `<router-outlet>` directive is essential for Angular's routing mechanism. It serves as the placeholder where routed components are dynamically loaded and rendered based on the application's route configuration. By using `<router-outlet>`, developers can create modular, navigable, and maintainable applications.
+
+# Services in Angular
+
+## Definition
+
+In Angular, a service is a class that provides specific functionality or encapsulates business logic that can be reused across multiple components. Services are typically used to handle data operations, such as fetching data from a server, logging, user authentication, and any other functionality that does not directly involve the user interface.
+
+## Key Features
+
+1. **Reusability**: Services allow you to define logic once and reuse it across multiple components.
+2. **Separation of Concerns**: By using services, you can keep your components lean and focused on presenting data rather than managing it.
+3. **Dependency Injection**: Angular services are typically provided through dependency injection, which allows you to easily manage and inject services where they are needed.
+
+## Creating a Service
+
+To create a service in Angular, you can use the Angular CLI:
+
+```bash
+ng generate service my-service
+```
+
+This command generates a service file (my-service.service.ts) and a corresponding test file.
+
+## Example
+
+Here's a basic example of a service that fetches data from an API:
+
+### `data.service.ts`
+
+```typescript
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+@Injectable({
+  providedIn: "root",
+})
+export class DataService {
+  private apiUrl = "https://api.example.com/data";
+
+  constructor(private http: HttpClient) {}
+
+  getData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+}
+```
+
+## Explanation
+
+- **`@Injectable` Decorator**: This decorator marks the class as a service that can be injected. The `providedIn: 'root'` metadata makes the service available application-wide.
+- **HttpClient**: This is Angular's built-in service for making HTTP requests. It is injected into the service via the constructor.
+- **getData Method**: This method uses `HttpClient` to perform a GET request to the specified API URL and returns an Observable.
+
+## Using a Service in a Component
+
+To use the service in a component, you need to inject it into the component's constructor.
+
+### `app.component.ts`
+
+```typescript
+import { Component, OnInit } from "@angular/core";
+import { DataService } from "./data.service";
+
+@Component({
+  selector: "app-root",
+  template: `
+    <div *ngIf="data">
+      <h1>Data from API:</h1>
+      <pre>{{ data | json }}</pre>
+    </div>
+  `,
+  styleUrls: ["./app.component.css"],
+})
+export class AppComponent implements OnInit {
+  data: any;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.getData().subscribe((response) => {
+      this.data = response;
+    });
+  }
+}
+```
+
+## Explanation
+
+- **Injection**: The `DataService` is injected into the component's constructor.
+- **ngOnInit**: The `getData` method is called within the `ngOnInit` lifecycle hook to fetch data when the component initializes.
+- **Template**: The fetched data is displayed in the template using Angular's data binding.
+
+## Summary
+
+Services in Angular are a powerful way to encapsulate and share business logic and data operations across multiple components. They promote reusability, maintainability, and separation of concerns by keeping components focused on presentation logic. Dependency injection is a core feature of Angular services, making it easy to manage dependencies and share data across your application.
+
+# Observable in Angular
+
+## Definition
+
+An Observable is a powerful tool in Angular for handling asynchronous operations and managing data streams. It represents a sequence of values over time and allows you to subscribe to these values. Observables are a key part of the Angular framework and are extensively used in scenarios such as handling HTTP requests, user interactions, and data manipulation.
+
+## Key Features
+
+1. **Asynchronous Data Streams**: Observables can emit multiple values over time, including asynchronous events such as HTTP responses, user input, timers, and more.
+
+2. **Cancellation and Disposal**: Observables can be easily cancelled or disposed of, helping to manage resources and prevent memory leaks.
+
+3. **Error Handling**: Observables provide built-in error handling mechanisms, allowing you to handle errors gracefully within your application.
+
+4. **Transformation and Composition**: Observables support powerful operators for transforming, filtering, combining, and manipulating data streams, enabling complex data processing pipelines.
+
+## Example
+
+Here's a basic example of creating and subscribing to an Observable in Angular:
+
+```typescript
+import { Observable } from "rxjs";
+
+// Create an Observable that emits values
+const observable = new Observable<number>((subscriber) => {
+  subscriber.next(1);
+  subscriber.next(2);
+  subscriber.next(3);
+  setTimeout(() => {
+    subscriber.next(4);
+    subscriber.complete();
+  }, 1000);
+});
+
+// Subscribe to the Observable
+observable.subscribe({
+  next: (value) => console.log(value),
+  error: (error) => console.error(error),
+  complete: () => console.log("Observable completed"),
+});
+```
+
+## Explanation
+
+We create an Observable using the Observable constructor and provide a function that defines the sequence of values to emit.
+Within the function, we use the subscriber.next() method to emit values to subscribers.
+We also use setTimeout() to demonstrate emitting values asynchronously.
+We subscribe to the Observable and provide handlers for next, error, and complete events.
+
+## Summary
+
+Observables are a fundamental part of Angular's reactive programming model. They provide a powerful and flexible way to handle asynchronous data streams, manage asynchronous operations, and compose complex data transformations. Understanding Observables is essential for building robust and efficient Angular applications.
+
+# Understanding .subscribe Method
+
+## Purpose
+
+The `.subscribe()` method is used in Observables to subscribe to the sequence of values emitted by the Observable. It allows you to specify what should happen when new values are emitted, handle errors, and perform cleanup tasks when the Observable completes or is unsubscribed.
+
+## Key Functions
+
+1. **Receiving Values**: The `next` function passed to `.subscribe()` is called whenever a new value is emitted by the Observable. This function receives the emitted value as its argument.
+
+2. **Handling Errors**: The `error` function is called if the Observable encounters an error during its execution. It allows you to handle errors gracefully and take appropriate actions.
+
+3. **Completing Observable**: The `complete` function is called when the Observable completes its sequence and emits no more values. It signals that the Observable has finished its operation.
+
+## Usage Across Different Technologies
+
+The `.subscribe()` method is commonly associated with Observables in libraries like RxJS, where it is used to subscribe to data streams. However, the concept of subscribing to events or data streams is not unique to Observables and can be found in various programming paradigms and technologies.
+
+## Other Usages
+
+1. **Event Handling**: In JavaScript and many other programming languages, event-driven programming involves subscribing to events emitted by various sources such as user interactions, DOM elements, or external services. Event listeners are essentially a form of subscription.
+
+2. **Callback Functions**: In asynchronous programming, callback functions are often used to handle the result of asynchronous operations. When you pass a callback function to an asynchronous function, you are essentially subscribing to the completion or result of that operation.
+
+3. **Promises**: Although Promises are not directly related to `.subscribe()`, they provide similar functionality for handling asynchronous operations. When you call `.then()` on a Promise, you are effectively subscribing to the resolution of that Promise.
+
+4. **Pub/Sub Patterns**: In pub/sub (publish/subscribe) patterns, subscribers register interest in specific topics or channels and receive messages published to those topics. Subscribers effectively subscribe to messages published by publishers.
+
+## Summary
+
+While `.subscribe()` is commonly associated with Observables in libraries like RxJS, the concept of subscribing to events or data streams is more broadly applicable across various programming paradigms and technologies. It is used to handle asynchronous operations, events, and data streams in a reactive and efficient manner.
+
+# Dependency Injection (DI)
+
+## Definition
+
+Dependency Injection (DI) is a design pattern used in software development to manage dependencies between objects and promote loose coupling. It involves injecting dependencies into a class rather than allowing the class to create them itself. In Angular, DI is a fundamental concept used for providing and injecting dependencies throughout the application.
+
+## Key Concepts
+
+1. **Providers**: In Angular, dependencies are provided by providers. A provider is a recipe for creating an injectable instance of a class or value. Providers can be registered at the module level or at the component level.
+
+2. **Injection Tokens**: Dependencies are identified using injection tokens, which are used as keys for looking up dependencies in the dependency injection container. Injection tokens can be classes, strings, or opaque tokens.
+
+3. **Injection Mechanism**: Angular's DI mechanism automatically resolves dependencies and injects them into components, services, directives, and other Angular constructs when they are instantiated.
+
+## Example
+
+Suppose we have a `UserService` class that depends on an `HttpClient` for making HTTP requests. Instead of creating an instance of `HttpClient` within the `UserService`, we inject it as a dependency:
+
+```typescript
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+
+@Injectable({
+  providedIn: "root",
+})
+export class UserService {
+  constructor(private http: HttpClient) {}
+
+  getUsers() {
+    return this.http.get("/api/users");
+  }
+}
+```
+
+## Benefits
+
+1. **Decoupling**: Dependency Injection promotes loose coupling between classes by removing direct dependencies and allowing them to be provided externally.
+
+2. **Testability**: DI facilitates easier testing by allowing dependencies to be replaced with mock or stub implementations during testing.
+
+3. **Reusability**: Injecting dependencies makes classes more reusable and modular, as they can be easily used in different contexts without modification.
+
+## Summary
+
+Dependency Injection is a powerful design pattern used in Angular for managing dependencies between classes and promoting modularity, testability, and maintainability. By injecting dependencies into classes rather than allowing them to create their own dependencies, DI helps to achieve loose coupling and separation of concerns in Angular applications.
+
+# Loose Coupling
+
+## Definition
+
+Loose coupling is a design principle in software engineering that promotes independence and flexibility between components or modules. It refers to the degree of interdependence between software modules, where modules are designed to have minimal knowledge or dependency on each other's internal workings.
+
+## Key Concepts
+
+1. **Independence**: Loose coupling allows modules to operate independently of each other. Changes to one module should have minimal impact on other modules.
+
+2. **Flexibility**: Loose coupling promotes flexibility by allowing modules to be easily replaced, extended, or modified without affecting the overall system.
+
+3. **Abstraction**: Abstraction is often used to achieve loose coupling. By defining clear interfaces or contracts between modules, implementation details can be hidden, reducing dependencies.
+
+## Benefits
+
+1. **Modifiability**: Loose coupling makes software easier to modify, as changes to one module are less likely to require changes to other modules.
+
+2. **Testability**: Modules with loose coupling are easier to test in isolation, as dependencies can be easily replaced with mock or stub implementations during testing.
+
+3. **Reusability**: Loose coupling promotes reusability, as modules can be used in different contexts without modification.
+
+## Example
+
+Consider a car with various components such as engine, transmission, and wheels. Loose coupling would mean that each component can function independently and can be replaced or upgraded without affecting the operation of other components. For example, changing the engine should not require modifications to the transmission or wheels.
+
+## Summary
+
+Loose coupling is a fundamental principle in software design that promotes independence, flexibility, and maintainability. By reducing dependencies between modules and promoting abstraction and clear interfaces, loose coupling helps create modular, scalable, and resilient software systems.
